@@ -15,6 +15,7 @@ class _loginPageState extends State<loginPage> {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
+            print('testing');
             Navigator.pushNamed(context, '/home');
           },
           child: Text('login'),

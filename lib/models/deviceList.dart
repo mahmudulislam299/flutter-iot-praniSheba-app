@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:iot_pranisheba_app/services/network.dart';
 import 'dart:convert';
 
 class DeviceCondition {
@@ -14,12 +13,15 @@ class NumberOfDevice {
   late DeviceCondition base_station;
   late DeviceCondition bolus;
   late DeviceCondition cowshed_device;
+  late Network networkForGetDeviceNumber;
 
   //constructor
-  NumberOfDevice(
-      {required this.base_station,
-      required this.bolus,
-      required this.cowshed_device});
+  NumberOfDevice({
+    required this.base_station,
+    required this.bolus,
+    required this.cowshed_device,
+    required this.networkForGetDeviceNumber,
+  });
 
   void PrintFunc() {
     print(base_station.active);
@@ -35,16 +37,26 @@ class NumberOfDevice {
     print(cowshed_device.total);
   }
 
-  Future<void> getNumberofDeviceData() async {
-    // try {
-    Response response = await get(Uri.parse(
-        'http://iotdev.pranisheba.com.bd/api/v1/devices/num_of_devices/'));
-    // print(response.body);
-    Map data = jsonDecode(response.body);
+  Future<void> getAllValue() async {
+    var data = await networkForGetDeviceNumber.getData();
+    print("data:::");
+    print(data.runtimeType);
     print(data);
-    // base_station.active = data['base_station.active'];
-    // print(base_station.active);
 
-    // }
+    Map dataMap = jsonDecode(data);
+    print(dataMap);
+    print(dataMap['base_station']['total']);
+
+    // base_station.active = data['base_station'];
+    // base_station.inactive = data['base_station'];
+    // base_station.total = data['base_station'];
+
+    // bolus.active = data['bolus'];
+    // bolus.inactive = data['bolus'];
+    // bolus.total = data['bolus'];
+
+    // cowshed_device.active = data['cowshed_device'];
+    // cowshed_device.inactive = data['cowshed_device'];
+    // cowshed_device.total = data['cowshed_device'];
   }
 }
