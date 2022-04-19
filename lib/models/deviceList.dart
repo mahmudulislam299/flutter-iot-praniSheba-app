@@ -13,14 +13,12 @@ class NumberOfDevice {
   late DeviceCondition base_station;
   late DeviceCondition bolus;
   late DeviceCondition cowshed_device;
-  late Network networkForGetDeviceNumber;
 
   //constructor
   NumberOfDevice({
     required this.base_station,
     required this.bolus,
     required this.cowshed_device,
-    required this.networkForGetDeviceNumber,
   });
 
   void PrintFunc() {
@@ -37,26 +35,47 @@ class NumberOfDevice {
     print(cowshed_device.total);
   }
 
-  Future<void> getAllValue() async {
-    var data = await networkForGetDeviceNumber.getData();
-    print("data:::");
-    print(data.runtimeType);
-    print(data);
-
+  void setDataDeviceData(String data) {
     Map dataMap = jsonDecode(data);
     print(dataMap);
     print(dataMap['base_station']['total']);
 
-    // base_station.active = data['base_station'];
-    // base_station.inactive = data['base_station'];
-    // base_station.total = data['base_station'];
+    base_station.active = dataMap['base_station']['active'];
+    base_station.inactive = dataMap['base_station']['inactive'];
+    base_station.total = dataMap['base_station']['total'];
 
-    // bolus.active = data['bolus'];
-    // bolus.inactive = data['bolus'];
-    // bolus.total = data['bolus'];
+    bolus.active = dataMap['bolus']['active'];
+    bolus.inactive = dataMap['bolus']['inactive'];
+    bolus.total = dataMap['bolus']['total'];
 
-    // cowshed_device.active = data['cowshed_device'];
-    // cowshed_device.inactive = data['cowshed_device'];
-    // cowshed_device.total = data['cowshed_device'];
+    cowshed_device.active = dataMap['cowshed_device']['active'];
+    cowshed_device.inactive = dataMap['cowshed_device']['inactive'];
+    cowshed_device.total = dataMap['cowshed_device']['total'];
+
+    PrintFunc();
   }
+  // Future<void> getAllValue() async {
+  //   var data = await networkForGetDeviceNumber.getData();
+  //   print("data:::");
+  //   print(data.runtimeType);
+  //   print(data);
+
+  //   Map dataMap = jsonDecode(data);
+  //   print(dataMap);
+  //   print(dataMap['base_station']['total']);
+
+  //   base_station.active = dataMap['base_station']['active'];
+  //   base_station.inactive = dataMap['base_station']['inactive'];
+  //   base_station.total = dataMap['base_station']['total'];
+
+  //   bolus.active = dataMap['bolus']['active'];
+  //   bolus.inactive = dataMap['bolus']['inactive'];
+  //   bolus.total = dataMap['bolus']['total'];
+
+  //   cowshed_device.active = dataMap['cowshed_device']['active'];
+  //   cowshed_device.inactive = dataMap['cowshed_device']['inactive'];
+  //   cowshed_device.total = dataMap['cowshed_device']['total'];
+
+  //   PrintFunc();
+  // }
 }
